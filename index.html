@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>С Днём Рождения — открытка</title>
+
+<style>
+:root{
+  --bg: #1c140d;
+  --gold: #d6b56a;
+  --text: #f7e9cc;
+  --muted: #e9d3a5;
+  --caption: #f0d9a6;
+}
+
+html, body {height:100%; margin:0;}
+
+body{
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Verdana', sans-serif;
+  overflow-y:auto;
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+}
+
+#snow, #hearts { position:fixed; inset:0; z-index:0; pointer-events:none; }
+
+.page {
+  position:relative; z-index:2;
+  width:100%; max-width:820px; margin:0 auto;
+  padding:90px 20px 160px;
+  box-sizing:border-box;
+}
+
+h1.title{
+  margin:0 0 8px;
+  text-align:center;
+  color: var(--gold);
+  font-family: 'Arial', sans-serif;
+  font-size:42px;
+  letter-spacing:1.2px;
+}
+p.lead{
+  text-align:center;
+  margin:0 0 30px;
+  color:var(--muted);
+  opacity:0.95;
+}
+
+.gold-wrap{
+  position:fixed; top:0; left:50%;
+  transform:translateX(-50%);
+  width:600px; height:2400px;
+  pointer-events:none; z-index:1;
+  opacity:0.95;
+}
+
+.photo-block{
+  width:320px; margin:160px auto;
+  text-align:center; position:relative;
+}
+
+.photo{
+  width:320px; height:420px;
+  object-fit:cover; display:block; margin:0 auto;
+  border-radius:14px; border:3px solid var(--gold);
+  box-shadow:
+    0 20px 30px rgba(0,0,0,0.55),
+    0 0 18px rgba(212,175,55,0.15);
+  background:#111;
+  transition: transform .45s cubic-bezier(.22,.9,.3,1), filter .35s;
+}
+
+.photo-block.inview .photo{
+  transform: translateY(0) rotate(var(--rotate));
+  filter: brightness(1);
+  opacity:1;
+}
+.photo-block .photo{
+  transform: translateY(20px) rotate(var(--rotate));
+  opacity:0;
+  filter: brightness(.95);
+}
+
+.caption{
+  margin-top:14px;
+  color: var(--caption);
+  font-style:italic;
+  max-width:320px;
+  margin-left:auto; margin-right:auto;
+  line-height:1.4;
+}
+
+.tilt-left{ --rotate: -4deg; }
+.tilt-right{ --rotate: 4deg; }
+
+.header-ticket {
+  display: inline-block;
+  background: linear-gradient(135deg, #f7e0a7, #d6b56a, #b78f3d);
+  color: #1c140d; /* тёмный текст для контраста */
+  padding: 16px 32px;
+  border-radius: 12px;
+  font-weight: bold;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+  text-align: center;
+  font-family: 'Arial', sans-serif;
+}
+.header-ticket p {
+  margin: 8px 0 0;
+  font-size: 18px;
+  font-weight: normal;
+}
+
+@media (max-width:420px){
+  .photo, .photo-block { 
+    width:86vw; 
+    height:56vw; 
+  }
+  .gold-wrap{ width:360px; }
+
+  .header-ticket {
+    padding: 12px 18px;
+    font-size: 18px;
+    border-radius: 8px;
+  }
+  .header-ticket p {
+    font-size: 14px;
+  }
+
+  .page {
+    padding: 60px 16px 120px;
+  }
+
+  h1.title { font-size: 28px; }
+  p.lead { font-size: 14px; }
+}
+</style>
+</head>
+<body>
+
+<canvas id="snow"></canvas>
+<canvas id="hearts"></canvas>
+
+<div class="gold-wrap" aria-hidden="true">
+  <svg viewBox="0 0 600 2400" preserveAspectRatio="xMidYMin slice" style="width:100%;height:100%;">
+    <defs>
+      <linearGradient id="g" x1="0" x2="1">
+        <stop offset="0%" stop-color="#f7e0a7"/>
+        <stop offset="50%" stop-color="#d6b56a"/>
+        <stop offset="100%" stop-color="#b78f3d"/>
+      </linearGradient>
+      <filter id="soft" x="-50%" y="-50%" width="200%" height="200%">
+        <feGaussianBlur stdDeviation="1.2" result="b"/>
+        <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+      </filter>
+    </defs>
+    <path d="M300 20
+             C 360 160, 240 320, 300 480
+             C 350 640, 240 820, 300 980
+             C 360 1140, 250 1320, 300 1480
+             C 340 1620, 290 1760, 300 1900
+             C 320 2060, 290 2240, 300 2380"
+          stroke="url(#g)" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"
+          fill="none" filter="url(#soft)"/>
+  </svg>
+</div>
+
+<main class="page" role="main">
+  <div style="text-align:center; margin-bottom:40px;">
+    <div class="header-ticket">
+      С днём рождения!
+      <p>Тёплого дня, мягких улыбок и немного зимней магии рядом.</p>
+    </div>
+  </div>
+
+  <section class="photo-block tilt-left">
+    <img class="photo" src="photos/1.jpg" alt="Фото 1">
+    <p class="caption">Пусть каждый день будет как это фото — тёплый и настоящий.</p>
+  </section>
+
+  <section class="photo-block tilt-right">
+    <img class="photo" src="photos/2.jpg" alt="Фото 2]">
+    <p class="caption">Желаю уютных вечеров, верных людей и новых маленьких побед.</p>
+  </section>
+
+  <section class="photo-block tilt-left">
+    <img class="photo" src="photos/3.jpg" alt="Фото 3">
+    <p class="caption">Пускай сердечки и снежинки приносят вдохновение.</p>
+  </section>
+</main>
+
+<script>
+/* Лёгкий снег */
+(function(){
+  const canvas=document.getElementById('snow'); if(!canvas)return;
+  const ctx=canvas.getContext('2d'); let W=window.innerWidth,H=window.innerHeight;
+  canvas.width=W; canvas.height=H;
+  const flakes=Array.from({length:120}).map(()=>({x:Math.random()*W,y:Math.random()*H,r:Math.random()*2+0.6,s:Math.random()*0.6+0.2,dx:(Math.random()*0.6-0.3)}));
+  window.addEventListener('resize',()=>{W=window.innerWidth;H=window.innerHeight;canvas.width=W;canvas.height=H;});
+  let t=0;
+  function frame(){t+=0.01;ctx.clearRect(0,0,W,H);ctx.fillStyle='rgba(255,255,255,0.8)';ctx.beginPath();
+    for(const f of flakes){f.x+=f.dx*f.s+Math.sin(t+f.x*0.001)*0.15;f.y+=f.s;if(f.y>H+10){f.y=-10;f.x=Math.random()*W;}ctx.moveTo(f.x,f.y);ctx.arc(f.x,f.y,f.r,0,Math.PI*2);}
+    ctx.fill();requestAnimationFrame(frame);
+  }
+  requestAnimationFrame(frame);
+})();
+
+/* Сердечки */
+(function(){
+  const canvas=document.getElementById('hearts'); if(!canvas)return;
+  const ctx=canvas.getContext('2d'); let W=window.innerWidth,H=window.innerHeight;
+  canvas.width=W; canvas.height=H;
+  const hearts=[]; for(let i=0;i<40;i++){hearts.push({x:Math.random()*W,y:Math.random()*H,size:Math.random()*14+6,speed:Math.random()*0.6+0.2,dx:(Math.random()*0.4-0.2)});}
+  window.addEventListener('resize',()=>{W=window.innerWidth;H=window.innerHeight;canvas.width=W;canvas.height=H;});
+  function draw(){ctx.clearRect(0,0,W,H);ctx.fillStyle='rgba(255,100,150,0.7)';ctx.beginPath();
+    for(const h of hearts){h.x+=h.dx;h.y+=h.speed;if(h.y>H+20){h.y=-20;h.x=Math.random()*W;} const x=h.x,y=h.y,s=h.size;ctx.moveTo(x,y);ctx.bezierCurveTo(x-s/2,y-s/2,x-s,y+s/3,x,y+s);ctx.bezierCurveTo(x+s,y+s/3,x+s/2,y-s/2,x,y);}
+    ctx.fill();requestAnimationFrame(draw);}
+  requestAnimationFrame(draw);
+})();
+
+/* Появление фото при скролле */
+(function(){
+  const blocks=document.querySelectorAll('.photo-block');
+  if(!('IntersectionObserver' in window)){ blocks.forEach(b=>b.classList.add('inview')); return; }
+  const io=new IntersectionObserver((entries)=>{entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('inview');}});},{threshold:0.25});
+  blocks.forEach(b=>io.observe(b));
+})();
+</script>
+
+</body>
+</html>
